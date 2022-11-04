@@ -66,6 +66,15 @@ def input_data_libro(msg=""):
         datos_obtenidos.append(dato)
     return datos_obtenidos
 
+def borrar_libro(data, id):
+    print(data[0])
+    for indice, item in enumerate(data[1::], start=1):
+        if int(id) == int(item.id):
+            libro = data.pop(indice)
+            print(libro)
+            print('El libro ha sido eliminado correctamente!')
+            time.sleep(2)
+    return data
 
 def cargar_archivo(nombre_archivo):
     try:
