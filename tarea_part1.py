@@ -1,8 +1,8 @@
 import time 
 import os
 import csv
-#Clase base que servira para la creacion de los objetos libros.
 
+#Clase base que servira para la creacion de los objetos libros.
 
 class Libro:
     def __init__(self, id, titulo, genero, isbn, editorial,autores):
@@ -28,6 +28,9 @@ class Libro:
     def get_isbn(self):
         return self.isbn
 
+    def get_editorial(self):
+        return self.editorial
+        
     def mostrar_info(self):
         return f"({self.id})|{self.titulo} | {self.genero} | {self.isbn} | {self.editorial} | {self.get_autores()}"
 
@@ -47,6 +50,7 @@ class Libro:
 # 9 Editar Libro (Jesus)
 # 10 Guardar Libros(Jesus)
 
+#
 def cargar_archivo(nombre_archivo):
     try:
         data_libros = []
@@ -61,7 +65,7 @@ def cargar_archivo(nombre_archivo):
                 else:
                     data_libros.append(data)            
             print('Datos cargados correctamente!')
-            time.sleep(2)
+            time.sleep(1)
     except FileNotFoundError:
         print("El archivo no existe.")        
         return nombre_archivo, data_libros
@@ -163,8 +167,7 @@ if  __name__ == '__main__':
                     print('No se ha podido guardar el archivo. Intente nuevamente')
             else:
                 print('what')
-                guardar_datos(datos_libros, nombre_nuevo_archivo)
-            
+                guardar_datos(datos_libros, nombre_nuevo_archivo)            
         elif opcion == 11:
             print('Salir')
             exit()
