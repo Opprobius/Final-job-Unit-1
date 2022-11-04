@@ -98,6 +98,11 @@ def crear_libro(data) -> list:
     time.sleep(1)
     return data
 
+def listar_libros(data):
+    print(data[0])
+    for libro_instancia in data[1::]:
+        print(libro_instancia)
+        
 def cargar_archivo(nombre_archivo):
     try:
         data_libros = []
