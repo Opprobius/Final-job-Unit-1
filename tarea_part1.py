@@ -51,6 +51,22 @@ class Libro:
 # 10 Guardar Libros(Jesus)
 
 #
+
+
+def input_data_libro(msg=""):
+    campos_libro = [
+        "Ingrese un titulo : ", "ingrese un genero : ",
+        "Digite el isbn : ", "ingrese una editorial : ",
+        "Escriba los autores(si hay mas de uno use una ',') :"
+    ]
+    datos_obtenidos = []
+    print(msg)
+    for pregunta in campos_libro:
+        dato = input(pregunta)
+        datos_obtenidos.append(dato)
+    return datos_obtenidos
+
+
 def cargar_archivo(nombre_archivo):
     try:
         data_libros = []
