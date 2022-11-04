@@ -227,7 +227,7 @@ def guardar_datos(datos_libros, nombre_archivo):
             else:
                 writer.writerow(data)    
         print('Datos guardados exitosamente.')
-    return ""
+    return "Datos guardados exitosamente."
 
 
 menu_opciones = {
@@ -247,6 +247,13 @@ menu_opciones = {
 def mostrar_menu(opciones_del_menu):
     for key in opciones_del_menu.keys():
         print(str(key)+'-'+opciones_del_menu[key])
+        
+def verificar_datos(data):
+    if not data:
+        print('No tiene datos, cargue o cree un nuevo archivo.')
+        time.sleep(2)
+        return False
+    return True
 
 if  __name__ == '__main__':
     datos_libros = []
