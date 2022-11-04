@@ -257,70 +257,135 @@ def verificar_datos(data):
 
 if  __name__ == '__main__':
     datos_libros = []
-    nombre_archivo =  ''
+    nombre_archivo = ''
     while True:
         print(' ======================')
         print('|   MENU PRINCIPAL     |')
         print(' ======================')
-        mostrar_menu(menu_opciones)        
-        opcion = ''
+        mostrar_menu(menu_options)
         try:
-            opcion = int(input('Ingrese una accion a realizar: '))
-            while opcion not in menu_opciones.keys():
-                opcion = int(input(
-                    'Por favor ingrese una opcion correcta.'))
+            opcion = int(input('Que desea hacer?: '))
         except:
-            print('Por favor escoga un numero como accion a realizar')
-
+            print('Por favor ingrese una opcion valida.')
         if opcion == 1:
             nombre_archivo = input('Ingrese el nombre del archivo: ')
             while len(nombre_archivo) == 0:
-                nombre_archiv1o = input('Ingrese el nombre del archivo por favor. ')
+                nombre_archiv1o = input('Ingrese el nombre del archivo por favor')
             nombre_archivo +='.csv'
             nombre_archivo, datos_libros = cargar_archivo(nombre_archivo)
-
         elif opcion == 2:
-            print('Listar libros')
-            pass
+            if not verificar_datos(datos_libros):
+                time.sleep(1)
+            else:
+                listar_libros(datos_libros)
+                respuesta = input('escriba "q" para regresar al menu principal : ')
+                while respuesta.lower() not in ['q']:
+                    respuesta = input(
+                        'Por favor esriba "q" para salir al menu principal: ')
+                    respuesta = respuesta.lower()
+                if respuesta == 'q':
+                    time.sleep(1)
+
+
         elif opcion == 3:
-            print('Agregar libro')
-            pass
+            datos_libros = crear_libro(datos_libros)
         elif opcion == 4:
-            print('Eliminar libro')
-            pass
+            id_libro = ''
+            try:
+                id_libro = int(input('Escriba el id del libro a eliminar'))
+            except:
+                print('Se necesita un id(numero)')
+            if id_libro > 0:
+                datos_libros = borrar_libro(datos_libros, id_libro)
+                listar_libros(datos_libros)
         elif opcion == 5:
-            print('Buscar libros por isbn o titulo')
-            pass
+            mostrar_menu({
+                1: 'Buscar por ISBN',
+                2: 'Buscar por Titulo',
+                3: 'Volver al menu principal'
+            })
+            while(True):
+                try:
+                    opcion = int(input('Ingrese una opcion'))
+                    while opcion not in [1,2,3]:
+                        opcion = int(input(
+                            'Por favor ingrese una opcion correcta.'))
+                except:
+                    print('Por favor escoga un numero como accion a realizar')
+                if opcion == 1:
+                    print('Buscar por isbn')
+                    isbn = input('Digite el isbn: ')
+                    buscar_libro_por_isbn_titulo(datos_libros, input_isbn=isbn)
+                    break
+                elif opcion == 2:
+                    print('Buscar por titulo')
+                    titulo= input('Escriba el titulo del libro a buscar: ')
+                    buscar_libro_por_isbn_titulo(datos_libros, input_titulo=titulo)
+                    break
+                elif opcion == 3:
+                    break
+                else:
+                    print('Escoga una opcion por favor')
         elif opcion == 6:
-            print('ordenar libros por titulo')
-            pass
+            order_books_by_title(datos_libros)
+
         elif opcion == 7:
-            print('Buscar libros por autor, editorial y/o genero')
-            pass
+            mostrar_menu({
+                1: 'Buscar por autor',
+                2: 'Buscar por editorial',
+                3: 'Buscar por genero',
+                4: 'Regresar al menu principal'
+            })
+            while (True):
+                try:
+                    opcion = int(input('Ingrese una opcion'))
+                    while opcion not in [1, 2, 3,4]:
+                        opcion = int(input(
+                            'Por favor ingrese una opcion correcta.'))
+                except:
+                    print('Por favor escoga un numero como accion a realizar')
+                if opcion == 1:
+                    print('Buscar por isbn')
+                    autor = input('Escriba el nombre del autor: ')
+                    buscar_libro_por_autor_editorial_genero(datos_libros, input_autor=autor)
+                    break
+                elif opcion == 2:
+                    print('Buscar por titulo')
+                    editorial = input('Escriba la editorial del libro a buscar: ')
+                    buscar_libro_por_autor_editorial_genero(datos_libros, input_editorial=editorial)
+                    break
+                elif opcion == 3:
+                    genero = input('Escriba el genero del libro a buscar: ')
+                    buscar_libro_por_autor_editorial_genero(datos_libros, input_genero=genero)
+                    break
+                elif opcion == 4:
+                    break
+                else:
+                    print('Escoga una opcion por favor')
+
         elif opcion == 8:
-            print('Buscar libros por numero de autores')
-            pass
+            buscar_libro_por_numero_autores(datos_libros)
         elif opcion == 9:
-            print('Editar libro')
-            pass    
+            print("editar libro, insetar un id")
+            id_libro = ''
+            try:
+                id_libro = int(input('Escriba el id del libro a editar'))
+            except:
+                print('Se necesita un id(numero)')
+            editar_libro(datos_libros, id_libro)
         elif opcion == 10:
-            print('Guardar libros en un nuevo archivo')
-            nombre_nuevo_archivo = input('Escriba el nombre del nuevo archivo: ')
-            nombre_nuevo_archivo += '.csv'
-            if nombre_nuevo_archivo.lower() == nombre_archivo:
+            respuesta = input('Escriba el nombre del nuevo archivo: ')
+            respuesta +='.csv'
+            if respuesta.lower() == nombre_archivo:
                 opcion = input('Desea sobreescribir el archivo? escriba si / no : ')
                 if opcion == 'si':
-                    guardar_datos(datos_libros, nombre_archivo)
+                    guardar(datos_libros, nombre_archivo)
                 else:
                     print('No se ha podido guardar el archivo. Intente nuevamente')
             else:
                 print('what')
-                guardar_datos(datos_libros, nombre_nuevo_archivo)            
+                guardar(datos_libros, respuesta)
         elif opcion == 11:
-            print('Salir')
             exit()
-            pass
         else:
-            print('Por favor escoga una opcion de las listadas.')
-
-
+            print('Opcion invalida. Por favor elija un numero correcto.')
