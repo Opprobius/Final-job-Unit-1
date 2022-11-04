@@ -67,6 +67,23 @@ def cargar_archivo(nombre_archivo):
         return nombre_archivo, data_libros
     return nombre_archivo,data_libros
 
+nombre_archivo, data = cargar_archivo('libros.csv')
 
-_, data = cargar_archivo('libros.csv')
-print(data)
+
+def guardar_datos(datos_libros, nombre_archivo):
+    with open(str(nombre_archivo), 'w') as archivo:
+        print('ingreso al open')
+        writer = csv.writer(archivo, delimiter=',')
+        for indice, data in enumerate(datos_libros):
+            print(str(indice)+ 'iterando for')
+            
+            if indice != 0:
+                print([data.id, data.titulo, data.get_genero(), data.isbn, data.editorial, "|".join(data.autores)])
+                writer.writerow([data.id, data.titulo, data.get_genero(), data.isbn, data.editorial, "|".join(data.autores)])
+            else:
+                writer.writerow(data)
+    
+        print('Datos guardados exitosamente.')
+    return ""
+
+guardar_datos(data, "test2.csv")
