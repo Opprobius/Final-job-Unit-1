@@ -140,8 +140,20 @@ def order_books_by_title(data):
     for item in instancias_libros:
         print(item)
     return data
+#hay que definir las funciones de los tipos de busqueda
+#__________________________________________________________
+def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editorial=None, input_genero=None):
+    resultado = data[0]
+
+   
+def buscar_libro_por_numero_autores(data_libros):
+  
 
 
+def buscar_libro_por_isbn_titulo(data: list, input_isbn=None, input_titulo=None)->list:
+    
+
+#__________________________________________________________________________________________
 def guardar_datos(datos_libros, nombre_archivo):
     with open(str(nombre_archivo), 'w') as archivo:
         print('ingreso al open')
