@@ -132,6 +132,14 @@ def cargar_archivo(nombre_archivo):
         return nombre_archivo, data_libros
     return nombre_archivo,data_libros
 
+def order_books_by_title(data):
+    #data[0] = headers
+    print(data[0])
+    instancias_libros = data[1::]
+    instancias_libros.sort(key=lambda x: x.titulo, reverse=False)
+    for item in instancias_libros:
+        print(item)
+    return data
 
 
 def guardar_datos(datos_libros, nombre_archivo):
