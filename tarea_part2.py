@@ -24,6 +24,7 @@ def obtener_1():
     if peticion.status_code == 200:
         peticion = peticion.json()
         for i, datos in enumerate(peticion['results'], start=1):
+            pass
         
 def obtener_2():
     var_2 = ''
