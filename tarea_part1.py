@@ -76,6 +76,28 @@ def borrar_libro(data, id):
             time.sleep(2)
     return data
 
+def crear_libro(data) -> list:
+    id = int(data[-1].id) + 1
+    preguntas = [
+        "Ingrese un titulo : ", "ingrese un genero : ",
+        "Digite el isbn : ", "ingrese una editorial : ",
+        "Escriba los autores(si hay mas de uno use una ',') :"
+    ]
+    respuestas = []
+    for pregunta in preguntas:
+        dato = input(pregunta)
+        respuestas.append(dato)
+
+    titulo, genero, isbn, editorial, autores = respuestas
+    autores = autores.split(',')
+
+    libro_instancia  = Libro(id, titulo, genero, isbn, editorial, autores)
+    data.append(libro_instancia)
+    print(libro_instancia)
+    print('Libro creado correctamente!')
+    time.sleep(1)
+    return data
+
 def cargar_archivo(nombre_archivo):
     try:
         data_libros = []
