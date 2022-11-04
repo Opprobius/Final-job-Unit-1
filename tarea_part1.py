@@ -192,9 +192,28 @@ def buscar_libro_por_isbn_titulo(data: list, input_isbn=None, input_titulo=None)
             print(input_titulo+'??'+item.get_titulo())
             if str(input_titulo).lower().strip() == item.get_titulo().lower().strip():
                 resultado.append(item)
-    
+
+
+    if len(resultado) > 0:
+        print(resultado[0])
+    else:
+        print('No se han encontrado coincidencias.')
+    return data
+
 
 #__________________________________________________________________________________________
+
+def parse_data_libro(instance_book):
+    data = []
+    data.append(instance_book.id)
+    data.append(instance_book.titulo)
+    data.append(instance_book.get_genero())
+    data.append(instance_book.isbn)
+    data.append(instance_book.editorial)
+    autores = "|".join(instance_book.autores)
+    data.append(autores)
+    return data
+
 def guardar_datos(datos_libros, nombre_archivo):
     with open(str(nombre_archivo), 'w') as archivo:
         print('ingreso al open')
