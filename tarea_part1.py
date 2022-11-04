@@ -145,12 +145,53 @@ def order_books_by_title(data):
 def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editorial=None, input_genero=None):
     resultado = data[0]
 
-   
+    if input_autor != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_autor).strip() in item.get_autores():
+                resultado.append(item)
+
+    elif input_editorial != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_editorial).lower().strip() == item.get_editorial().lower().strip():
+                resultado.append(item)
+
+    elif input_genero != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_genero).lower().strip() == item.get_genero().lower().strip():
+                resultado.append(item)
+
+    if len(resultado) > 0:
+        listar_libros(resultado)
+    else:
+        print('No se han encontrado coincidencias.')
+    return data
+
 def buscar_libro_por_numero_autores(data_libros):
-  
+    try:
+        numero_autores = int(input('Por cuantos autores desea listar'))
+    except:
+        print('Tiene que ingresar un numero')
+
+    resultado = [data_libros[0]]
+    for data in data_libros[1::]:
+        if len(data.autores) == numero_autores:
+            resultado.append(data)
+    listar_libros(resultado)
 
 
 def buscar_libro_por_isbn_titulo(data: list, input_isbn=None, input_titulo=None)->list:
+    print(data[0])
+    resultado = []
+    if input_isbn != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_isbn).strip() == item.get_isbn().strip():
+                resultado.append(item)
+
+    elif input_titulo != None:
+        for indice, item in enumerate(data[1::], start=1):
+            print(input_titulo+'??'+item.get_titulo())
+            if str(input_titulo).lower().strip() == item.get_titulo().lower().strip():
+                resultado.append(item)
     
 
 #__________________________________________________________________________________________
