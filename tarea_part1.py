@@ -103,6 +103,15 @@ def listar_libros(data):
     for libro_instancia in data[1::]:
         print(libro_instancia)
         
+def crear_nuevo_archivo():
+    filename ='libros1.csv'
+    file = open('nuevo_archivo_libros.csv','w')
+    file.write('Id,Titulo,Genero,Isbn,Editorial,Autores'+os.linesep)
+    file.close()
+    data_libros = cargar_archivo(filename)
+    return data_libros
+
+        
 def cargar_archivo(nombre_archivo):
     try:
         data_libros = []
