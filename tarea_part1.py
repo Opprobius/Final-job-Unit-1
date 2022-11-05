@@ -189,12 +189,36 @@ def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editor
     else:
         print('No se han encontrado coincidencias.')
     return data
+
+#8 BUSCAR LIBROS POR NUMERO DE AUTORES
+
+def buscar_libro_por_numero_autores(data_libros):
+    numero_autores = ''
+    try:
+        numero_autores = int(input('Por cuantos autores desea listar'))
+    except:
+        print('Tiene que ingresar un numero')
+
+    resultado = [data_libros[0]]
+    for data in data_libros[1::]:
+        print(data.get_autores())
+        if len(data.get_autores()) == numero_autores:
+            resultado.append(data)
+
+    if len(resultado)>0:
+        listar_libros(resultado)
+    else:
+        print('No se han encontrado coincidencias.')
+    return ""
+
+
+#9 EDITAR UN LIBRO
  
 
 
 #10 GUARDAR DATOS 
 def guardar_datos(datos_libros, nombre_archivo):
-    with open(str(nombre_archivo), 'w') as archivo:
+    with open(str(nombre_archivo), 'w', newline='') as archivo:
         print('ingreso al open')
         writer = csv.writer(archivo, delimiter=',')
         for indice, data in enumerate(datos_libros):
@@ -235,6 +259,7 @@ def verificar_datos(data):
         time.sleep(2)
         return False
     return True
+
 def mostrar_menu(opciones_del_menu):
     for key in opciones_del_menu.keys():
         print(str(key)+'-'+opciones_del_menu[key])
@@ -370,8 +395,8 @@ if  __name__ == '__main__':
                     else:
                         print('Escoga una opcion por favor')
             elif opcion == 8:
-                print('Buscar libros por numero de autores')
-                pass
+                buscar_libro_por_numero_autores(datos_libros)
+                salir_al_menu_principal()                
             elif opcion == 9:
                 print('Editar libro')
                 pass    
@@ -386,7 +411,11 @@ if  __name__ == '__main__':
                         print('No se ha podido guardar el archivo. Intente nuevamente')
                 else:                    
                     guardar_datos(datos_libros, nombre_nuevo_archivo)            
-        elif opcion == 11:            
-            exit()            
+            elif opcion == 11:   
+                print('vuelva pronto!')         
+                exit()
+        elif opcion ==11 :
+            print('vuelva pronto!')         
+            exit()                      
         else:
             print('Por favor escoga una opcion de las listadas.')
