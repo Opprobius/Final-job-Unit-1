@@ -211,7 +211,27 @@ def buscar_libro_por_numero_autores(data_libros):
 
 
 #9 EDITAR UN LIBRO
- 
+ def editar_libro(data, id):
+    for indice, data in enumerate(data):
+        if indice != 0:
+            if int(data.id) == int(id):
+                titulo, genero, isbn, editorial, autores = input_data_libro(msg="Si no desea actualizar un campo en especifico puede dejarlo en vacio")
+                if titulo.strip() !=  '':
+                    data.titulo = titulo
+                if genero.strip() != '':
+                    data.genero = genero
+                if isbn.strip() != '':
+                    data.isbn = isbn
+                if editorial.strip() != '':
+                    data.editorial = editorial
+                if autores.strip() != '':
+                    autores = autores.split(',')
+                    data.autores = autores
+                print(data)
+                print('Libro actualizado correctamente. ')
+                return data
+    print('No se ha encontrado un libro con el id proporcionado')
+    return data
 
 
 #10 GUARDAR DATOS 
@@ -396,8 +416,14 @@ if  __name__ == '__main__':
                 buscar_libro_por_numero_autores(datos_libros)
                 salir_al_menu_principal()                
             elif opcion == 9:
-                print('Editar libro')
-                pass    
+                print("editar libro, insetar un id")
+                id_libro = ''
+                try:
+                    id_libro = int(input('Escriba el id del libro a editar'))
+                except:
+                    print('Se necesita un id(numero)')
+                editar_libro(datos_libros, id_libro)
+                time.sleep(1.5)    
             elif opcion == 10:                
                 nombre_nuevo_archivo = input('Escriba el nombre del nuevo archivo: ')
                 nombre_nuevo_archivo += '.csv'
