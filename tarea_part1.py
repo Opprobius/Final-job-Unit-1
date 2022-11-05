@@ -193,6 +193,28 @@ def mostrar_menu(opciones_del_menu):
     for key in opciones_del_menu.keys():
         print(str(key)+'-'+opciones_del_menu[key])
 
+
+#FUNCIONES PARA INTERACTUAR CON EL MENU
+def salir_al_menu_principal():
+    respuesta = input('escriba "q" para regresar al menu principal : ')
+    while respuesta.lower() not in ['q']:
+        respuesta = input(
+            'Por favor esriba "q" para salir al menu principal: ')
+        respuesta = respuesta.lower()
+    if respuesta == 'q':
+        time.sleep(0.5)
+        return True
+    return False
+
+#FUNCION QUE VERIFICA Y HAY DATOS CARGADOS O NO
+def verificar_datos(data):
+    if not data:
+        time.sleep(1)
+        return False
+    return True
+
+
+
 if  __name__ == '__main__':
     datos_libros = []
     nombre_archivo =  ''
@@ -216,47 +238,46 @@ if  __name__ == '__main__':
                 nombre_archiv1o = input('Ingrese el nombre del archivo por favor. ')
             nombre_archivo +='.csv'
             nombre_archivo, datos_libros = cargar_archivo(nombre_archivo)
-
-        elif opcion == 2:
-            print('Listar libros')
-            pass
-        elif opcion == 3:
-            print('Agregar libro')
-            pass
-        elif opcion == 4:
-            print('Eliminar libro')
-            pass
-        elif opcion == 5:
-            print('Buscar libros por isbn o titulo')
-            pass
-        elif opcion == 6:
-            print('ordenar libros por titulo')
-            pass
-        elif opcion == 7:
-            print('Buscar libros por autor, editorial y/o genero')
-            pass
-        elif opcion == 8:
-            print('Buscar libros por numero de autores')
-            pass
-        elif opcion == 9:
-            print('Editar libro')
-            pass    
-        elif opcion == 10:
-            print('Guardar libros en un nuevo archivo')
-            nombre_nuevo_archivo = input('Escriba el nombre del nuevo archivo: ')
-            nombre_nuevo_archivo += '.csv'
-            if nombre_nuevo_archivo.lower() == nombre_archivo:
-                opcion = input('Desea sobreescribir el archivo? escriba si / no : ')
-                if opcion == 'si':
-                    guardar_datos(datos_libros, nombre_archivo)
+        
+        if verificar_datos(datos_libros):
+            if opcion == 2:
+                print('Listar libros')
+                pass
+            elif opcion == 3:
+                print('Agregar libro')
+                pass
+            elif opcion == 4:
+                print('Eliminar libro')
+                pass
+            elif opcion == 5:
+                print('Buscar libros por isbn o titulo')
+                pass
+            elif opcion == 6:
+                print('ordenar libros por titulo')
+                pass
+            elif opcion == 7:
+                print('Buscar libros por autor, editorial y/o genero')
+                pass
+            elif opcion == 8:
+                print('Buscar libros por numero de autores')
+                pass
+            elif opcion == 9:
+                print('Editar libro')
+                pass    
+            elif opcion == 10:
+                print('Guardar libros en un nuevo archivo')
+                nombre_nuevo_archivo = input('Escriba el nombre del nuevo archivo: ')
+                nombre_nuevo_archivo += '.csv'
+                if nombre_nuevo_archivo.lower() == nombre_archivo:
+                    opcion = input('Desea sobreescribir el archivo? escriba si / no : ')
+                    if opcion == 'si':
+                        guardar_datos(datos_libros, nombre_archivo)
+                    else:
+                        print('No se ha podido guardar el archivo. Intente nuevamente')
                 else:
-                    print('No se ha podido guardar el archivo. Intente nuevamente')
-            else:
-                print('what')
-                guardar_datos(datos_libros, nombre_nuevo_archivo)            
-        elif opcion == 11:
-            print('Salir')
-            exit()
-            pass
+                    print('what')
+                    guardar_datos(datos_libros, nombre_nuevo_archivo)            
+        elif opcion == 11:            
+            exit()            
         else:
             print('Por favor escoga una opcion de las listadas.')
