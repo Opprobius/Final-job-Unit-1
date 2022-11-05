@@ -50,10 +50,12 @@ class Libro:
 # 9 Editar Libro (Jesus)
 # 10 Guardar Libros(Jesus)
 
-#
-
-
+#FUNCIONES UTILES
 def input_data_libro(msg=""):
+    """
+    :param msg: "Mensaje adicional que sera mostrado al momento de crear/editar
+    """
+
     campos_libro = [
         "Ingrese un titulo : ", "ingrese un genero : ",
         "Digite el isbn : ", "ingrese una editorial : ",
@@ -66,53 +68,8 @@ def input_data_libro(msg=""):
         datos_obtenidos.append(dato)
     return datos_obtenidos
 
-def borrar_libro(data, id):
-    print(data[0])
-    for indice, item in enumerate(data[1::], start=1):
-        if int(id) == int(item.id):
-            libro = data.pop(indice)
-            print(libro)
-            print('El libro ha sido eliminado correctamente!')
-            time.sleep(2)
-    return data
-
-def crear_libro(data) -> list:
-    id = int(data[-1].id) + 1
-    preguntas = [
-        "Ingrese un titulo : ", "ingrese un genero : ",
-        "Digite el isbn : ", "ingrese una editorial : ",
-        "Escriba los autores(si hay mas de uno use una ',') :"
-    ]
-    respuestas = []
-    for pregunta in preguntas:
-        dato = input(pregunta)
-        respuestas.append(dato)
-
-    titulo, genero, isbn, editorial, autores = respuestas
-    autores = autores.split(',')
-
-    libro_instancia  = Libro(id, titulo, genero, isbn, editorial, autores)
-    data.append(libro_instancia)
-    print(libro_instancia)
-    print('Libro creado correctamente!')
-    time.sleep(1)
-    return data
-
-def listar_libros(data):
-    print(data[0])
-    for libro_instancia in data[1::]:
-        print(libro_instancia)
-        
-def crear_nuevo_archivo():
-    filename ='libros1.csv'
-    file = open('nuevo_archivo_libros.csv','w')
-    file.write('Id,Titulo,Genero,Isbn,Editorial,Autores'+os.linesep)
-    file.close()
-    data_libros = cargar_archivo(filename)
-    return data_libros
-
-        
-def cargar_archivo(nombre_archivo):
+#1 CARGAR ARCHIVO
+def cargar_archivo(nombre_archivo:str):
     try:
         data_libros = []
         with open(nombre_archivo, encoding='utf-8') as archivo:
@@ -132,7 +89,53 @@ def cargar_archivo(nombre_archivo):
         return nombre_archivo, data_libros
     return nombre_archivo,data_libros
 
-def order_books_by_title(data):
+#2 LISTAR LIBROS
+def listar_libros(data:list):
+    print(data[0])
+    for libro_instancia in data[1::]:
+        print(libro_instancia)
+
+
+#3 AGREGAR (CREAR) LIBRO
+def crear_libro(data:list) -> list:
+    id = int(data[-1].id) + 1
+    preguntas = [
+        "Ingrese un titulo : ", "ingrese un genero : ",
+        "Digite el isbn : ", "ingrese una editorial : ",
+        "Escriba los autores(si hay mas de uno use una ',') :"
+    ]
+    respuestas = []
+    for pregunta in preguntas:
+        dato = input(pregunta)
+        respuestas.append(dato)
+
+    titulo, genero, isbn, editorial, autores = respuestas
+    titulo = titulo.capitalize()
+    autores = autores.split(',')
+
+    libro_instancia  = Libro(id, titulo, genero, isbn, editorial, autores)
+    data.append(libro_instancia)
+    print(libro_instancia)
+    print('Libro creado correctamente!')
+    time.sleep(1)
+    return data
+
+#4 ELIMINAR LIBRO
+def borrar_libro(data:list, id:int) -> list:
+    print(data[0])
+    for indice, item in enumerate(data[1::], start=1):
+        if int(id) == int(item.id):
+            libro = data.pop(indice)
+            print(libro)
+            print('El libro ha sido eliminado correctamente!')
+            time.sleep(2)
+    return data
+
+
+
+
+#6 ORDENAR LIBROS POR TITULO
+def ordenar_libros_por_titulo(data:list) -> list:
     #data[0] = headers
     print(data[0])
     instancias_libros = data[1::]
@@ -148,7 +151,7 @@ def order_books_by_title(data):
 
 #__________________________________________________________________________________________
 
-
+#10 GUARDAR DATOS 
 def guardar_datos(datos_libros, nombre_archivo):
     with open(str(nombre_archivo), 'w') as archivo:
         print('ingreso al open')
@@ -254,7 +257,8 @@ if  __name__ == '__main__':
                 pass
             elif opcion == 6:
                 print('ordenar libros por titulo')
-                pass
+                ordenar_libros_por_titulo(datos_libros)
+                salir_al_menu_principal()                
             elif opcion == 7:
                 print('Buscar libros por autor, editorial y/o genero')
                 pass
