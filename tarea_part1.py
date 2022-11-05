@@ -50,10 +50,12 @@ class Libro:
 # 9 Editar Libro (Jesus)
 # 10 Guardar Libros(Jesus)
 
-#
-
-
+#FUNCIONES UTILES
 def input_data_libro(msg=""):
+    """
+    :param msg: "Mensaje adicional que sera mostrado al momento de crear/editar
+    """
+
     campos_libro = [
         "Ingrese un titulo : ", "ingrese un genero : ",
         "Digite el isbn : ", "ingrese una editorial : ",
@@ -66,53 +68,8 @@ def input_data_libro(msg=""):
         datos_obtenidos.append(dato)
     return datos_obtenidos
 
-def borrar_libro(data, id):
-    print(data[0])
-    for indice, item in enumerate(data[1::], start=1):
-        if int(id) == int(item.id):
-            libro = data.pop(indice)
-            print(libro)
-            print('El libro ha sido eliminado correctamente!')
-            time.sleep(2)
-    return data
-
-def crear_libro(data) -> list:
-    id = int(data[-1].id) + 1
-    preguntas = [
-        "Ingrese un titulo : ", "ingrese un genero : ",
-        "Digite el isbn : ", "ingrese una editorial : ",
-        "Escriba los autores(si hay mas de uno use una ',') :"
-    ]
-    respuestas = []
-    for pregunta in preguntas:
-        dato = input(pregunta)
-        respuestas.append(dato)
-
-    titulo, genero, isbn, editorial, autores = respuestas
-    autores = autores.split(',')
-
-    libro_instancia  = Libro(id, titulo, genero, isbn, editorial, autores)
-    data.append(libro_instancia)
-    print(libro_instancia)
-    print('Libro creado correctamente!')
-    time.sleep(1)
-    return data
-
-def listar_libros(data):
-    print(data[0])
-    for libro_instancia in data[1::]:
-        print(libro_instancia)
-        
-def crear_nuevo_archivo():
-    filename ='libros1.csv'
-    file = open('nuevo_archivo_libros.csv','w')
-    file.write('Id,Titulo,Genero,Isbn,Editorial,Autores'+os.linesep)
-    file.close()
-    data_libros = cargar_archivo(filename)
-    return data_libros
-
-        
-def cargar_archivo(nombre_archivo):
+#1 CARGAR ARCHIVO
+def cargar_archivo(nombre_archivo:str):
     try:
         data_libros = []
         with open(nombre_archivo, encoding='utf-8') as archivo:
@@ -132,7 +89,71 @@ def cargar_archivo(nombre_archivo):
         return nombre_archivo, data_libros
     return nombre_archivo,data_libros
 
-def order_books_by_title(data):
+#2 LISTAR LIBROS
+def listar_libros(data:list):
+    print(data[0])
+    for libro_instancia in data[1::]:
+        print(libro_instancia)
+
+
+#3 AGREGAR (CREAR) LIBRO
+def crear_libro(data:list) -> list:
+    id = int(data[-1].id) + 1
+    preguntas = [
+        "Ingrese un titulo : ", "ingrese un genero : ",
+        "Digite el isbn : ", "ingrese una editorial : ",
+        "Escriba los autores(si hay mas de uno use una ',') :"
+    ]
+    respuestas = []
+    for pregunta in preguntas:
+        dato = input(pregunta)
+        respuestas.append(dato)
+
+    titulo, genero, isbn, editorial, autores = respuestas
+    titulo = titulo.capitalize()
+    autores = autores.split(',')
+
+    libro_instancia  = Libro(id, titulo, genero, isbn, editorial, autores)
+    data.append(libro_instancia)
+    print(libro_instancia)
+    print('Libro creado correctamente!')
+    time.sleep(1)
+    return data
+
+#4 ELIMINAR LIBRO
+def borrar_libro(data:list, id:int) -> list:
+    print(data[0])
+    for indice, item in enumerate(data[1::], start=1):
+        if int(id) == int(item.id):
+            libro = data.pop(indice)
+            print(libro)
+            print('El libro ha sido eliminado correctamente!')
+            time.sleep(2)
+    return data
+
+#5 BUSCAR LIBRO POR ISBN O TITULO
+def buscar_libro_por_isbn_titulo(data: list, input_isbn=None, input_titulo=None)->list:
+    print(data[0])
+    resultado = []
+    if input_isbn != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_isbn).strip() == item.get_isbn().strip():
+                resultado.append(item)
+
+    elif input_titulo != None:
+        for indice, item in enumerate(data[1::], start=1):
+            print(input_titulo+'??'+item.get_titulo())
+            if str(input_titulo).lower().strip() == item.get_titulo().lower().strip():
+                resultado.append(item)
+
+    if len(resultado) > 0:
+        print(resultado[0])
+    else:
+        print('No se han encontrado coincidencias.')
+    return data
+
+#6 ORDENAR LIBROS POR TITULO
+def ordenar_libros_por_titulo(data:list) -> list:
     #data[0] = headers
     print(data[0])
     instancias_libros = data[1::]
@@ -140,17 +161,63 @@ def order_books_by_title(data):
     for item in instancias_libros:
         print(item)
     return data
-#hay que definir las funciones de los tipos de busqueda
-#__________________________________________________________
 
+
+#hay que definir las funciones de los tipos de busqueda
+
+#7 BUSCAR LIBROS POR AUTOR-EDITORIAL Y/O GENERO
+def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editorial=None, input_genero=None):
+    resultado = data[0]
+
+    if input_autor != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_autor).strip() in item.get_autores():
+                resultado.append(item)
+
+    elif input_editorial != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_editorial).lower().strip() == item.get_editorial().lower().strip():
+                resultado.append(item)
+
+    elif input_genero != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_genero).lower().strip() == item.get_genero().lower().strip():
+                resultado.append(item)
+    
+    if len(resultado) > 0:
+        listar_libros(resultado)
+    else:
+        print('No se han encontrado coincidencias.')
+    return data
+
+#8 BUSCAR LIBROS POR NUMERO DE AUTORES
+
+def buscar_libro_por_numero_autores(data_libros):
+    numero_autores = ''
+    try:
+        numero_autores = int(input('Por cuantos autores desea listar? :'))
+    except:
+        print('Tiene que ingresar un numero')
+
+    resultado = [data_libros[0]]
+    for data in data_libros[1::]:        
+        if int(len(data.get_autores())) == int(numero_autores):            
+            resultado.append(data)
+
+    if len(resultado)>1:
+        listar_libros(resultado)
+    else:
+        print('No se han encontrado coincidencias.')
+    return ""
+
+
+#9 EDITAR UN LIBRO
  
 
 
-#__________________________________________________________________________________________
-
-
+#10 GUARDAR DATOS 
 def guardar_datos(datos_libros, nombre_archivo):
-    with open(str(nombre_archivo), 'w') as archivo:
+    with open(str(nombre_archivo), 'w', newline='') as archivo:
         print('ingreso al open')
         writer = csv.writer(archivo, delimiter=',')
         for indice, data in enumerate(datos_libros):
@@ -165,6 +232,8 @@ def guardar_datos(datos_libros, nombre_archivo):
     return "Datos guardados exitosamente."
 
 
+
+# MENU PRINCIPAL
 menu_opciones = {
     1: 'Cargar Archivo',
     2: 'Listar Libros',
@@ -189,6 +258,7 @@ def verificar_datos(data):
         time.sleep(2)
         return False
     return True
+
 def mostrar_menu(opciones_del_menu):
     for key in opciones_del_menu.keys():
         print(str(key)+'-'+opciones_del_menu[key])
@@ -241,31 +311,95 @@ if  __name__ == '__main__':
         
         if verificar_datos(datos_libros):
             if opcion == 2:
-                print('Listar libros')
-                pass
+                listar_libros(datos_libros)
+                salir_al_menu_principal()
             elif opcion == 3:
-                print('Agregar libro')
-                pass
+                datos_libros = crear_libro(datos_libros)
+                salir_al_menu_principal()
             elif opcion == 4:
-                print('Eliminar libro')
-                pass
+                id_libro = ''
+                try:
+                    id_libro = int(input('Escriba el id del libro a eliminar'))
+                except:
+                    print('Se necesita un id(numero)')
+                if id_libro > 0:
+                    datos_libros = borrar_libro(datos_libros, id_libro)
+                    listar_libros(datos_libros)
+            
             elif opcion == 5:
-                print('Buscar libros por isbn o titulo')
-                pass
-            elif opcion == 6:
-                print('ordenar libros por titulo')
-                pass
+                mostrar_menu({
+                    1: 'Buscar por ISBN',
+                    2: 'Buscar por Titulo',
+                    3: 'Volver al menu principal'
+                })
+
+                while (True):
+                    try:
+                        opcion = int(input('Ingrese una opcion: '))
+                        while opcion not in [1, 2, 3]:
+                            opcion = int(input(
+                                'Por favor ingrese una opcion correcta.'))
+                    except:
+                        print('Por favor escoga un numero como accion a realizar')
+                    if opcion == 1:
+                        isbn = input('Digite el isbn: ')
+                        buscar_libro_por_isbn_titulo(datos_libros, input_isbn=isbn)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 2:
+                        titulo = input('Escriba el titulo del libro a buscar: ')
+                        buscar_libro_por_isbn_titulo(datos_libros, input_titulo=titulo)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 3:
+                        break
+                    else:
+                        print('Escoga una opcion por favor')
+                
+            elif opcion == 6:                
+                ordenar_libros_por_titulo(datos_libros)
+                salir_al_menu_principal()                
             elif opcion == 7:
-                print('Buscar libros por autor, editorial y/o genero')
-                pass
+                mostrar_menu({
+                    1: 'Buscar por autor',
+                    2: 'Buscar por editorial',
+                    3: 'Buscar por genero',
+                    4: 'Regresar al menu principal'
+                })
+                while (True):
+                    try:
+                        opcion = int(input('Ingrese una opcion: '))
+                        while opcion not in [1, 2, 3, 4]:
+                            opcion = int(input(
+                                'Por favor ingrese una opcion correcta.'))
+                    except:
+                        print('Por favor escoga un numero como accion a realizar')
+                    if opcion == 1:                        
+                        autor = input('Escriba el nombre del autor: ')
+                        buscar_libro_por_autor_editorial_genero(datos_libros, input_autor=autor)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 2:                        
+                        editorial = input('Escriba la editorial del libro a buscar: ')
+                        buscar_libro_por_autor_editorial_genero(datos_libros, input_editorial=editorial)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 3:
+                        genero = input('Escriba el genero del libro a buscar: ')
+                        buscar_libro_por_autor_editorial_genero(datos_libros, input_genero=genero)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 4:
+                        break
+                    else:
+                        print('Escoga una opcion por favor')
             elif opcion == 8:
-                print('Buscar libros por numero de autores')
-                pass
+                buscar_libro_por_numero_autores(datos_libros)
+                salir_al_menu_principal()                
             elif opcion == 9:
                 print('Editar libro')
                 pass    
-            elif opcion == 10:
-                print('Guardar libros en un nuevo archivo')
+            elif opcion == 10:                
                 nombre_nuevo_archivo = input('Escriba el nombre del nuevo archivo: ')
                 nombre_nuevo_archivo += '.csv'
                 if nombre_nuevo_archivo.lower() == nombre_archivo:
@@ -274,10 +408,13 @@ if  __name__ == '__main__':
                         guardar_datos(datos_libros, nombre_archivo)
                     else:
                         print('No se ha podido guardar el archivo. Intente nuevamente')
-                else:
-                    print('what')
+                else:                    
                     guardar_datos(datos_libros, nombre_nuevo_archivo)            
-        elif opcion == 11:            
-            exit()            
+            elif opcion == 11:   
+                print('vuelva pronto!')         
+                exit()
+        elif opcion ==11 :
+            print('vuelva pronto!')         
+            exit()                      
         else:
             print('Por favor escoga una opcion de las listadas.')
