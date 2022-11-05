@@ -131,8 +131,26 @@ def borrar_libro(data:list, id:int) -> list:
             time.sleep(2)
     return data
 
+#5 BUSCAR LIBRO POR ISBN O TITULO
+def buscar_libro_por_isbn_titulo(data: list, input_isbn=None, input_titulo=None)->list:
+    print(data[0])
+    resultado = []
+    if input_isbn != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_isbn).strip() == item.get_isbn().strip():
+                resultado.append(item)
 
+    elif input_titulo != None:
+        for indice, item in enumerate(data[1::], start=1):
+            print(input_titulo+'??'+item.get_titulo())
+            if str(input_titulo).lower().strip() == item.get_titulo().lower().strip():
+                resultado.append(item)
 
+    if len(resultado) > 0:
+        print(resultado[0])
+    else:
+        print('No se han encontrado coincidencias.')
+    return data
 
 #6 ORDENAR LIBROS POR TITULO
 def ordenar_libros_por_titulo(data:list) -> list:
@@ -244,17 +262,28 @@ if  __name__ == '__main__':
         
         if verificar_datos(datos_libros):
             if opcion == 2:
-                print('Listar libros')
-                pass
+                listar_libros(datos_libros)
+                salir_al_menu_principal()
             elif opcion == 3:
-                print('Agregar libro')
-                pass
+                datos_libros = crear_libro(datos_libros)
+                salir_al_menu_principal()
             elif opcion == 4:
-                print('Eliminar libro')
-                pass
+                id_libro = ''
+                try:
+                    id_libro = int(input('Escriba el id del libro a eliminar'))
+                except:
+                    print('Se necesita un id(numero)')
+                if id_libro > 0:
+                    datos_libros = borrar_libro(datos_libros, id_libro)
+                    listar_libros(datos_libros)
+            
             elif opcion == 5:
-                print('Buscar libros por isbn o titulo')
-                pass
+                mostrar_menu({
+                    1: 'Buscar por ISBN',
+                    2: 'Buscar por Titulo',
+                    3: 'Volver al menu principal'
+                })
+                
             elif opcion == 6:
                 print('ordenar libros por titulo')
                 ordenar_libros_por_titulo(datos_libros)
