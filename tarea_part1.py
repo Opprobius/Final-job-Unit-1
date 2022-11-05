@@ -51,6 +51,67 @@ class Libro:
 # 10 Guardar Libros(Jesus)
 
 #
+
+
+def input_data_libro(msg=""):
+    campos_libro = [
+        "Ingrese un titulo : ", "ingrese un genero : ",
+        "Digite el isbn : ", "ingrese una editorial : ",
+        "Escriba los autores(si hay mas de uno use una ',') :"
+    ]
+    datos_obtenidos = []
+    print(msg)
+    for pregunta in campos_libro:
+        dato = input(pregunta)
+        datos_obtenidos.append(dato)
+    return datos_obtenidos
+
+def borrar_libro(data, id):
+    print(data[0])
+    for indice, item in enumerate(data[1::], start=1):
+        if int(id) == int(item.id):
+            libro = data.pop(indice)
+            print(libro)
+            print('El libro ha sido eliminado correctamente!')
+            time.sleep(2)
+    return data
+
+def crear_libro(data) -> list:
+    id = int(data[-1].id) + 1
+    preguntas = [
+        "Ingrese un titulo : ", "ingrese un genero : ",
+        "Digite el isbn : ", "ingrese una editorial : ",
+        "Escriba los autores(si hay mas de uno use una ',') :"
+    ]
+    respuestas = []
+    for pregunta in preguntas:
+        dato = input(pregunta)
+        respuestas.append(dato)
+
+    titulo, genero, isbn, editorial, autores = respuestas
+    autores = autores.split(',')
+
+    libro_instancia  = Libro(id, titulo, genero, isbn, editorial, autores)
+    data.append(libro_instancia)
+    print(libro_instancia)
+    print('Libro creado correctamente!')
+    time.sleep(1)
+    return data
+
+def listar_libros(data):
+    print(data[0])
+    for libro_instancia in data[1::]:
+        print(libro_instancia)
+        
+def crear_nuevo_archivo():
+    filename ='libros1.csv'
+    file = open('nuevo_archivo_libros.csv','w')
+    file.write('Id,Titulo,Genero,Isbn,Editorial,Autores'+os.linesep)
+    file.close()
+    data_libros = cargar_archivo(filename)
+    return data_libros
+
+        
 def cargar_archivo(nombre_archivo):
     try:
         data_libros = []
@@ -71,6 +132,21 @@ def cargar_archivo(nombre_archivo):
         return nombre_archivo, data_libros
     return nombre_archivo,data_libros
 
+def order_books_by_title(data):
+    #data[0] = headers
+    print(data[0])
+    instancias_libros = data[1::]
+    instancias_libros.sort(key=lambda x: x.titulo, reverse=False)
+    for item in instancias_libros:
+        print(item)
+    return data
+#hay que definir las funciones de los tipos de busqueda
+#__________________________________________________________
+
+ 
+
+
+#__________________________________________________________________________________________
 
 
 def guardar_datos(datos_libros, nombre_archivo):
@@ -86,7 +162,7 @@ def guardar_datos(datos_libros, nombre_archivo):
             else:
                 writer.writerow(data)    
         print('Datos guardados exitosamente.')
-    return ""
+    return "Datos guardados exitosamente."
 
 
 menu_opciones = {
@@ -103,6 +179,16 @@ menu_opciones = {
     11: 'Salir'
 }
 
+def mostrar_menu(opciones_del_menu):
+    for key in opciones_del_menu.keys():
+        print(str(key)+'-'+opciones_del_menu[key])
+        
+def verificar_datos(data):
+    if not data:
+        print('No tiene datos, cargue o cree un nuevo archivo.')
+        time.sleep(2)
+        return False
+    return True
 def mostrar_menu(opciones_del_menu):
     for key in opciones_del_menu.keys():
         print(str(key)+'-'+opciones_del_menu[key])
@@ -195,5 +281,3 @@ if  __name__ == '__main__':
             exit()            
         else:
             print('Por favor escoga una opcion de las listadas.')
-
-
