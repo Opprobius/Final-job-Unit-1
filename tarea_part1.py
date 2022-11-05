@@ -332,8 +332,7 @@ if  __name__ == '__main__':
                     else:
                         print('Escoga una opcion por favor')
                 
-            elif opcion == 6:
-                print('ordenar libros por titulo')
+            elif opcion == 6:                
                 ordenar_libros_por_titulo(datos_libros)
                 salir_al_menu_principal()                
             elif opcion == 7:
@@ -351,14 +350,12 @@ if  __name__ == '__main__':
                                 'Por favor ingrese una opcion correcta.'))
                     except:
                         print('Por favor escoga un numero como accion a realizar')
-                    if opcion == 1:
-                        print('Buscar por isbn')
+                    if opcion == 1:                        
                         autor = input('Escriba el nombre del autor: ')
                         buscar_libro_por_autor_editorial_genero(datos_libros, input_autor=autor)
                         salir_al_menu_principal()
                         break
-                    elif opcion == 2:
-                        print('Buscar por titulo')
+                    elif opcion == 2:                        
                         editorial = input('Escriba la editorial del libro a buscar: ')
                         buscar_libro_por_autor_editorial_genero(datos_libros, input_editorial=editorial)
                         salir_al_menu_principal()
