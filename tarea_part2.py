@@ -37,20 +37,32 @@ def listar_generaciones_de_pokemon():
             generaciones += f"{indice}.- {datos['name']}\n"
         print(generaciones)
         
-def listar_pokemones_por_generacion():
+def listar_pokemones_por_generacion(generacion):
     pokemones_por_generacion = ''
+    tipos = ''
     peticion = requests.get(f"https://pokeapi.co/api/v2/generation/{generacion}/")
     if peticion.status_code == 200:        
         peticion = peticion.json()
         print(' =================================')
-        print(f"| POKEMONES DE LA GENERACION {peticion['name']}   |")
+        print(f"| POKEMONES DE LA {peticion['name'].upper()}   |")
         print(' =================================')
         for indice, pokemon in enumerate(peticion['pokemon_species'], start=1):
             if indice%7 == 0:
-                resultado += f"| {pokemon['name']}\t\n"
+                pokemones_por_generacion += f"| {pokemon['name']}\t\n"
             else:
-                resultado += f"| {pokemon['name']}\t"
-        print(resultado)
+                pokemones_por_generacion += f"| {pokemon['name']}\t"
+        
+        if peticion['types']:            
+            for indice, tipo in enumerate(peticion['types'], start=1):                
+                if indice%5 == 0:
+                    tipos += f"| +{tipo['name']}\t\n"
+                else:
+                    tipos += f"| +{tipo['name']}\t\t"
+
+
+        print(pokemones_por_generacion)
+        print("\n\nTipo de pokemones que aparecen en esta generacion. ")
+        print(tipos)
         return ""
     else:
         print('Aun no existe esa generacion y/o algo ha ocurrido en el servidor.')
@@ -116,8 +128,15 @@ def obtener_pokemones_con_habilidad(habilidad):
     if peticion.status_code == 200:
         peticion = peticion.json()
         print(' =================================')
-        print(f"| POKEMONES CON habilidad {peticion['name']}   |")
+        print(f"| POKEMONES CON habilidad {peticion['name']}   |")        
         print(' =================================')
+        print("")
+        if peticion['effect_entries']:
+            print(f"Efecto de entrada: {peticion['effect_entries'][1]['effect']}\n")
+
+        if peticion['flavor_text_entries']:
+            print('Descripcion')
+            print(f"Efecto: {peticion['flavor_text_entries'][13]['flavor_text']}")
         for indice, pokemon in enumerate(peticion['pokemon'], start=1):
             if indice %3 == 0:
                 pokemones += '|'+pokemon['pokemon']['name']+'\n'
