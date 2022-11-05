@@ -1,43 +1,105 @@
 import requests
 #https://pokeapi.co/api/v2
 #Rutas para obtener la informacion
-#generation
-#pokemon-shape
-#ability
+
+#Obtener todas las  generaciones
+#https://pokeapi.co/api/v2/generation/
+#Obtener pokemones por generacion
+##https://pokeapi.co/api/v2/generation/{id or nombre_generacion}/
+
+#Obtener todas las formas de pokemones
+#https://pokeapi.co/api/v2/pokemon-shape/
+#Obtener los pokemones por la forma seleccionada
+#https://pokeapi.co/api/v2/pokemon-shape/{id or nombre_forma}/
+
+
+
+
+#Obtener todas las habilidades
+#https://pokeapi.co/api/v2/ability/?offset=20&limit=328
+#Listar pokemones por habilidad
+#https://pokeapi.co/api/v2/ability/{id or nombre_habilidad}/
+
+
 #pokemon-habitat
 #type
 
+#1- LISTAR POKEMONES POR GENERACION
+def listar_generaciones_de_pokemon():
+    generaciones = ''
+    peticion = requests.get('https://pokeapi.co/api/v2/generation/')
+    if peticion.status_code == 200:
+        peticion = peticion.json()
+        for indice, datos in enumerate(peticion['results'], start=1):
+            generaciones += f"{indice}.- {datos['name']}\n"
+        print(generaciones)
+        
+def listar_pokemones_por_generacion():
+    pokemones_por_generacion = ''
+    peticion = requests.get(f"https://pokeapi.co/api/v2/generation/{generacion}/")
+    if peticion.status_code == 200:        
+        peticion = peticion.json()
+        print(' =================================')
+        print(f"| POKEMONES DE LA GENERACION {peticion['name']}   |")
+        print(' =================================')
+        for indice, pokemon in enumerate(peticion['pokemon_species'], start=1):
+            if indice%7 == 0:
+                resultado += f"| {pokemon['name']}\t\n"
+            else:
+                resultado += f"| {pokemon['name']}\t"
+        print(resultado)
+        return ""
+    else:
+        print('Aun no existe esa generacion y/o algo ha ocurrido en el servidor.')
+        return ""
 
-#peticiones de Forma
-def obtener_1():
-    var_1 = ''
-    peticion = requests.get('url')
+
+#2 LISTAR POKEMONES POR FORMA
+def obtener_forma_de_pokemones():
+    forma_pokemones= ''
+    peticion = requests.get('https://pokeapi.co/api/v2/pokemon-shape/')
     if peticion.status_code == 200:
         peticion = peticion.json()
-        for i, datos in enumerate(peticion['results'], start=1):
-            pass
+        for indice,datos in enumerate(peticion['results'], start=1):
+            if indice % 5 == 0:
+                forma_pokemones += f"| {indice}.- {datos['name']}\t\n"
+            else:
+                forma_pokemones += f"|{indice}.- {datos['name']}\t"
+        print(forma_pokemones)
+    else:
+        print('Algo ha ocurrido en el servidor, intente más tarde.')
+        return forma_pokemones
+
+def obtener_pokemones_por_forma(forma):
+    pokemones = ''
+    peticion = requests.get(f"https://pokeapi.co/api/v2/pokemon-shape/{forma}")
+    if peticion.status_code == 200:
+        peticion = peticion.json()
+        print(' =================================')
+        print(f"| POKEMONES DE forma {peticion['name']}   |")
+        print(' =================================')
+        for indice, datos in enumerate(peticion['pokemon_species']):
+            if indice %5==0:
+                pokemones += f"| {datos['name']}\t\n"
+            else:
+                pokemones += f"| {datos['name']}\t"
+        print(pokemones)
+        return pokemones
+    else:
+        print('Algo ha ocurrido en el servidor')
+        return ""
+
+
+#3 LISTAR POKEMONES POR HABILIDAD
+
+
+def obtener_habilidades_de_pokemones():
+    pass
         
-def obtener_2():
-    var_2 = ''
-    peticion = requests.get('url')
-    if peticion.status_code == 200:
-        peticion = peticion.json()
-def obtener_3():
-    var_3= ''
-    peticion = requests.get('url')
-    if peticion.status_code == 200:
-        peticion = peticion.json()
-        
-def obtener_4():
-    var_4 = ''
-    peticion = requests.get('url')
-    if peticion.status_code == 200:
-        peticion = peticion.json()
-def obtener_5():
-    var_5 = ''
-    peticion = requests.get('url')
-    if peticion.status_code == 200:
-        peticion = peticion.json()
+
+
+def obtener_pokemones_con_habilidad(habilidad):
+    pass
 
 
 
