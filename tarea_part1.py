@@ -163,7 +163,24 @@ def ordenar_libros_por_titulo(data:list) -> list:
     return data
 #hay que definir las funciones de los tipos de busqueda
 #__________________________________________________________
+#7 BUSCAR LIBROS POR AUTOR-EDITORIAL Y/O GENERO
+def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editorial=None, input_genero=None):
+    resultado = data[0]
 
+    if input_autor != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_autor).strip() in item.get_autores():
+                resultado.append(item)
+
+    elif input_editorial != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_editorial).lower().strip() == item.get_editorial().lower().strip():
+                resultado.append(item)
+
+    elif input_genero != None:
+        for indice, item in enumerate(data[1::], start=1):
+            if str(input_genero).lower().strip() == item.get_genero().lower().strip():
+                resultado.append(item)
  
 
 
@@ -186,6 +203,8 @@ def guardar_datos(datos_libros, nombre_archivo):
     return "Datos guardados exitosamente."
 
 
+
+# MENU PRINCIPAL
 menu_opciones = {
     1: 'Cargar Archivo',
     2: 'Listar Libros',
@@ -283,14 +302,70 @@ if  __name__ == '__main__':
                     2: 'Buscar por Titulo',
                     3: 'Volver al menu principal'
                 })
+
+                while (True):
+                    try:
+                        opcion = int(input('Ingrese una opcion'))
+                        while opcion not in [1, 2, 3]:
+                            opcion = int(input(
+                                'Por favor ingrese una opcion correcta.'))
+                    except:
+                        print('Por favor escoga un numero como accion a realizar')
+                    if opcion == 1:
+                        isbn = input('Digite el isbn: ')
+                        buscar_libro_por_isbn_titulo(datos_libros, input_isbn=isbn)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 2:
+                        titulo = input('Escriba el titulo del libro a buscar: ')
+                        buscar_libro_por_isbn_titulo(datos_libros, input_titulo=titulo)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 3:
+                        break
+                    else:
+                        print('Escoga una opcion por favor')
                 
             elif opcion == 6:
                 print('ordenar libros por titulo')
                 ordenar_libros_por_titulo(datos_libros)
                 salir_al_menu_principal()                
             elif opcion == 7:
-                print('Buscar libros por autor, editorial y/o genero')
-                pass
+                mostrar_menu({
+                    1: 'Buscar por autor',
+                    2: 'Buscar por editorial',
+                    3: 'Buscar por genero',
+                    4: 'Regresar al menu principal'
+                })
+                while (True):
+                    try:
+                        opcion = int(input('Ingrese una opcion'))
+                        while opcion not in [1, 2, 3, 4]:
+                            opcion = int(input(
+                                'Por favor ingrese una opcion correcta.'))
+                    except:
+                        print('Por favor escoga un numero como accion a realizar')
+                    if opcion == 1:
+                        print('Buscar por isbn')
+                        autor = input('Escriba el nombre del autor: ')
+                        buscar_libro_por_autor_editorial_genero(datos_libros, input_autor=autor)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 2:
+                        print('Buscar por titulo')
+                        editorial = input('Escriba la editorial del libro a buscar: ')
+                        buscar_libro_por_autor_editorial_genero(datos_libros, input_editorial=editorial)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 3:
+                        genero = input('Escriba el genero del libro a buscar: ')
+                        buscar_libro_por_autor_editorial_genero(datos_libros, input_genero=genero)
+                        salir_al_menu_principal()
+                        break
+                    elif opcion == 4:
+                        break
+                    else:
+                        print('Escoga una opcion por favor')
             elif opcion == 8:
                 print('Buscar libros por numero de autores')
                 pass
