@@ -161,8 +161,10 @@ def ordenar_libros_por_titulo(data:list) -> list:
     for item in instancias_libros:
         print(item)
     return data
+
+
 #hay que definir las funciones de los tipos de busqueda
-#__________________________________________________________
+
 #7 BUSCAR LIBROS POR AUTOR-EDITORIAL Y/O GENERO
 def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editorial=None, input_genero=None):
     resultado = data[0]
@@ -181,10 +183,14 @@ def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editor
         for indice, item in enumerate(data[1::], start=1):
             if str(input_genero).lower().strip() == item.get_genero().lower().strip():
                 resultado.append(item)
+    
+    if len(resultado) > 0:
+        listar_libros(resultado)
+    else:
+        print('No se han encontrado coincidencias.')
+    return data
  
 
-
-#__________________________________________________________________________________________
 
 #10 GUARDAR DATOS 
 def guardar_datos(datos_libros, nombre_archivo):
@@ -305,7 +311,7 @@ if  __name__ == '__main__':
 
                 while (True):
                     try:
-                        opcion = int(input('Ingrese una opcion'))
+                        opcion = int(input('Ingrese una opcion: '))
                         while opcion not in [1, 2, 3]:
                             opcion = int(input(
                                 'Por favor ingrese una opcion correcta.'))
@@ -339,7 +345,7 @@ if  __name__ == '__main__':
                 })
                 while (True):
                     try:
-                        opcion = int(input('Ingrese una opcion'))
+                        opcion = int(input('Ingrese una opcion: '))
                         while opcion not in [1, 2, 3, 4]:
                             opcion = int(input(
                                 'Por favor ingrese una opcion correcta.'))
