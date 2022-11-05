@@ -375,8 +375,7 @@ if  __name__ == '__main__':
             elif opcion == 9:
                 print('Editar libro')
                 pass    
-            elif opcion == 10:
-                print('Guardar libros en un nuevo archivo')
+            elif opcion == 10:                
                 nombre_nuevo_archivo = input('Escriba el nombre del nuevo archivo: ')
                 nombre_nuevo_archivo += '.csv'
                 if nombre_nuevo_archivo.lower() == nombre_archivo:
@@ -385,8 +384,7 @@ if  __name__ == '__main__':
                         guardar_datos(datos_libros, nombre_archivo)
                     else:
                         print('No se ha podido guardar el archivo. Intente nuevamente')
-                else:
-                    print('what')
+                else:                    
                     guardar_datos(datos_libros, nombre_nuevo_archivo)            
         elif opcion == 11:            
             exit()            
