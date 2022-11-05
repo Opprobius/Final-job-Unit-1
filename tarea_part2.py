@@ -94,12 +94,44 @@ def obtener_pokemones_por_forma(forma):
 
 
 def obtener_habilidades_de_pokemones():
-    pass
+    habilidad_pokemones = ''
+    peticion = requests.get('https://pokeapi.co/api/v2/ability/?offset=20&limit=327')
+    if peticion.status_code == 200:
+        peticion = peticion.json()
+        for indice,datos in enumerate(peticion['results'], start=1):
+            if indice % 8 == 0:
+                habilidad_pokemones += f"| {''.join(filter(str.isdigit, datos['url']))[1::]}.- {datos['name']}\t\n"
+            else:
+                habilidad_pokemones += f"|{''.join(filter(str.isdigit, datos['url']))[1::]}.- {datos['name']}\t"
+        print(habilidad_pokemones)
+    else:
+        print('Algo ha ocurrido en el servidor, intente más tarde.')
+        return habilidad_pokemones
         
 
 
 def obtener_pokemones_con_habilidad(habilidad):
-    pass
+    print(habilidad)
+    pokemones = ''
+    peticion = requests.get(f"https://pokeapi.co/api/v2/ability/{habilidad}/")
+    if peticion.status_code == 200:
+        peticion = peticion.json()
+        print(' =================================')
+        print(f"| POKEMONES CON habilidad {peticion['name']}   |")
+        print(' =================================')
+        for indice, pokemon in enumerate(peticion['pokemon'], start=1):
+            if indice %3 == 0:
+                pokemones += '|'+pokemon['pokemon']['name']+'\n'
+            else:
+                pokemones += '|'+pokemon['pokemon']['name']+'|\t'
+        if len(pokemones) > 0:
+            print(pokemones)
+        else:
+            print('Aun no hay pokemones que tengan esa habilidad.')
+    else:
+        print("La habilidad no existe y/o ha ocurrido algo en el servidor")
+        return "La habilidad no existe y/o ha ocurrido algo en el servidor"
+    return ""
 
 
 
@@ -116,6 +148,19 @@ menu_opciones = {
 def mostrar_menu(opciones_menu):
     for key in opciones_menu.keys():
         print(str(key)+'-'+opciones_menu[key])
+
+
+def opcion_escogida_int_cadena(msg=None):
+    entrada = ''
+    try:
+        if msg != None:
+            print(msg)
+        entrada = input('Elija una opcion:  ')
+        if entrada == int or entrada == str:
+            pass
+    except:
+        print('Porfavor escoja una opcion de la lista')
+    return entrada
 
 
 
