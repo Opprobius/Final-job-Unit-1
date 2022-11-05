@@ -141,8 +141,7 @@ def buscar_libro_por_isbn_titulo(data: list, input_isbn=None, input_titulo=None)
                 resultado.append(item)
 
     elif input_titulo != None:
-        for indice, item in enumerate(data[1::], start=1):
-            print(input_titulo+'??'+item.get_titulo())
+        for indice, item in enumerate(data[1::], start=1):            
             if str(input_titulo).lower().strip() == item.get_titulo().lower().strip():
                 resultado.append(item)
 
