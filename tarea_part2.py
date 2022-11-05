@@ -94,7 +94,6 @@ def obtener_pokemones_por_forma(forma):
 
 
 #3 LISTAR POKEMONES POR HABILIDAD
-
 def obtener_habilidades_de_pokemones():
     habilidad_pokemones = ''
     peticion = requests.get('https://pokeapi.co/api/v2/ability/?offset=20&limit=327')
@@ -110,8 +109,6 @@ def obtener_habilidades_de_pokemones():
         print('Algo ha ocurrido en el servidor, intente más tarde.')
         return habilidad_pokemones
         
-
-
 def obtener_pokemones_con_habilidad(habilidad):
     print(habilidad)
     pokemones = ''
@@ -136,7 +133,6 @@ def obtener_pokemones_con_habilidad(habilidad):
     return ""
 
 
-
 #FUNCIONES DEL MENU
 menu_opciones = {
         1: 'Listar pokemons por generación',
@@ -151,7 +147,7 @@ def mostrar_menu(opciones_menu):
     for key in opciones_menu.keys():
         print(str(key)+'-'+opciones_menu[key])
 
-
+#FUNCION QUE VERIFICA EL INPUT QUE HA INGRESADO EL USUARIO
 def opcion_escogida_int_cadena(msg=None):
     entrada = ''
     try:
