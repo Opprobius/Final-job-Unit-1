@@ -195,17 +195,16 @@ def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editor
 def buscar_libro_por_numero_autores(data_libros):
     numero_autores = ''
     try:
-        numero_autores = int(input('Por cuantos autores desea listar'))
+        numero_autores = int(input('Por cuantos autores desea listar? :'))
     except:
         print('Tiene que ingresar un numero')
 
     resultado = [data_libros[0]]
-    for data in data_libros[1::]:
-        print(data.get_autores())
-        if len(data.get_autores()) == numero_autores:
+    for data in data_libros[1::]:        
+        if int(len(data.get_autores())) == int(numero_autores):            
             resultado.append(data)
 
-    if len(resultado)>0:
+    if len(resultado)>1:
         listar_libros(resultado)
     else:
         print('No se han encontrado coincidencias.')

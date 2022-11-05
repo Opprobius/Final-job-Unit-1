@@ -1,9 +1,10 @@
-Id,Titulo,Genero,Isbn,Editorial,Autores
-1,How to desing & teach workshops that work everytime,Terror,6364156,Standar,Jose.Huanca| Ruth Z
-2,desing & teach ,Comedia,5456465456,Standar,Oliver|Fio
-3,Mama mia,Romance,54568556,Standar,Ana I | Carlos IV
-4,React to professionals,Romance,12121269,Standar,Ana II | Carlos
-5,Mama mia,Romance,54568556,Standar,Ana I | Carlos IV
-7,Fintech to anyone,Romance,31313178,Standar,Ana III | Carlo
-9,Caramelos de a sol,Romance,25648741,Standar,Ana IV | Carl
-10,Holitas de mar,Terror,123123,santillana,Jesus|
+Id,Titulo,Genero,Isbn,Editorial,Autores
+1,How to desing & teach workshops that work everytime,Terror,6364156,Standar,Jose.Huanca| Ruth Z
+2,desing & teach ,Comedia,5456465456,Standar,Oliver|Fio
+3,Mama mia,Romance,54568556,Standar,Ana I | Carlos IV
+4,React to professionals,Romance,12121269,Standar,Ana II | Carlos
+5,Mama mia,Romance,54568556,Standar,Ana I | Carlos IV
+7,Fintech to anyone,Romance,31313178,Standar,Ana III | Carlo
+9,Caramelos de a sol,Romance,25648741,Standar,Ana IV | Carl
+10,Holitas de mar,Terror,123123,santillana,Jesus
+11,Test,terror,213123,test2,Jesus| More| zapata
