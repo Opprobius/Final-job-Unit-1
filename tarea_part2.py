@@ -57,7 +57,7 @@ def listar_pokemones_por_generacion(generacion):
         return ""
 
 
-#2 LISTAR POKEMONES POR FORMA
+#2 LISTAR POKEMONES POR FORMA // 2da pregunta
 def obtener_forma_de_pokemones():
     forma_pokemones= ''
     peticion = requests.get('https://pokeapi.co/api/v2/pokemon-shape/')
@@ -93,7 +93,7 @@ def obtener_pokemones_por_forma(forma):
         return ""
 
 
-#3 LISTAR POKEMONES POR HABILIDAD
+#3 LISTAR POKEMONES POR HABILIDAD // tercera pregunta
 def obtener_habilidades_de_pokemones():
     habilidad_pokemones = ''
     peticion = requests.get('https://pokeapi.co/api/v2/ability/?offset=20&limit=327')
@@ -116,15 +116,8 @@ def obtener_pokemones_con_habilidad(habilidad):
     if peticion.status_code == 200:
         peticion = peticion.json()
         print(' =================================')
-        print(f"| POKEMONES CON habilidad {peticion['name']}   |")        
+        print(f"| POKEMONES CON habilidad {peticion['name']}   |")
         print(' =================================')
-        print("")
-        if peticion['effect_entries']:
-            print(f"Efecto de entrada: {peticion['effect_entries'][1]['effect']}\n")
-
-        if peticion['flavor_text_entries']:
-            print('Descripcion')
-            print(f"Efecto: {peticion['flavor_text_entries'][13]['flavor_text']}")
         for indice, pokemon in enumerate(peticion['pokemon'], start=1):
             if indice %3 == 0:
                 pokemones += '|'+pokemon['pokemon']['name']+'\n'
