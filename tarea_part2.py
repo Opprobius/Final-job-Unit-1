@@ -79,7 +79,7 @@ def obtener_pokemones_por_forma(forma):
     if peticion.status_code == 200:
         peticion = peticion.json()
         print(' =================================')
-        print(f"| POKEMONES DE forma {peticion['name']}   |")
+        print(f"| POKEMONES DE FORMA {peticion['name']}   |")
         print(' =================================')
         for indice, datos in enumerate(peticion['pokemon_species']):
             if indice %5==0:
@@ -116,7 +116,7 @@ def obtener_pokemones_con_habilidad(habilidad):
     if peticion.status_code == 200:
         peticion = peticion.json()
         print(' =================================')
-        print(f"| POKEMONES CON habilidad {peticion['name']}   |")
+        print(f"| POKEMONES CON HABILIDAD {peticion['name']}   |")
         print(' =================================')
         for indice, pokemon in enumerate(peticion['pokemon'], start=1):
             if indice %3 == 0:
@@ -151,7 +151,7 @@ def obtener_pokemones_por_habitat(habitat):
     if peticion.status_code == 200:
         peticion = peticion.json()
         print(' =================================')
-        print(f"| POKEMONES DE habitat {peticion['name']}   |")
+        print(f"| POKEMONES DE HABITAT {peticion['name']}   |")
         print(' =================================')
         for indice, datos in enumerate(peticion['pokemon_species']):
             if indice %5==0:
@@ -178,6 +178,25 @@ def obtener_tipo_de_pokemones():
         print(habitat_pokemones)
     else:
         print('Algo ha ocurrido en el servidor')
+
+def obtener_pokemones_por_tipo(tipo):
+    pokemones = ''
+    peticion = requests.get(f"https://pokeapi.co/api/v2/type/{tipo}")
+    if peticion.status_code == 200:
+        peticion = peticion.json()
+        print(' =================================')
+        print(f"| POKEMONES DE TIPO {peticion['name']}   |")
+        print(' =================================')
+        for indice, datos in enumerate(peticion['pokemon']):
+            if indice %5==0:
+                pokemones += f"| {datos['pokemon']['name']}\t\n"
+            else:
+                pokemones += f"| {datos['pokemon']['name']}\t"
+        print(pokemones)
+        return pokemones
+    else:
+        print('Algo ha ocurrido en el servidor')
+        return ""
 #FUNCIONES DEL MENU
 menu_opciones = {
         1: 'Listar pokemons por generación',
