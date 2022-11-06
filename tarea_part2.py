@@ -231,12 +231,11 @@ if __name__ == '__main__':
         print(' ======================')
         print('|   MENU PRINCIPAL     |')
         print(' ======================')
-        mostrar_menu(menu_opciones)
-
+        mostrar_menu(menu_options)
         try:
-            opcion = int(input('Por favor seleccione una opción.'))
+            opcion = int(input('Que desea hacer?: '))
         except:
-            print('Por favor ingrese una opción numerica')
+            print('Por favor ingrese una opcion valida.')
         if opcion == 1:
             listar_generaciones_de_pokemon()
             opcion_escogida = opcion_escogida_int_cadena(msg='Escribe el numero de la generacion que quieres.')
@@ -246,19 +245,26 @@ if __name__ == '__main__':
             opcion_escogida = opcion_escogida_int_cadena(msg='Cual forma de pokemon desea buscar?')
             obtener_pokemones_por_forma(opcion_escogida)
         elif opcion == 3:
+            # listar_habilidades(datos_pokemon_habilidad)
             obtener_habilidades_de_pokemones()
             print('Para listar los pokemones debe')
             opcion_escogida = opcion_escogida_int_cadena(msg='escribir el numero y/o nombre de la habilidad')
             obtener_pokemones_con_habilidad(opcion_escogida)
         elif opcion == 4:
             print('Listar pokemones por habitat')
+            obtener_habitat_de_pokemones()
+            print('Para listar los pokemones debe')
+            opcion_escogida = opcion_escogida_int_cadena(msg='escribir el numero y/o nombre del habitat')
+            obtener_pokemones_por_habitat(opcion_escogida)
         elif opcion == 5:
             print('Listar pokemones por tipo')
+            obtener_tipo_de_pokemones()
+            opcion_escogida = opcion_escogida_int_cadena(msg='escribir el numero y/o nombre del tipo de pokemon')
+            obtener_pokemones_por_tipo(opcion_escogida)
         elif opcion == 6:
             exit()
         else:
             print('Por favor ingrese una opcion correcta.')
-
     
 
 
