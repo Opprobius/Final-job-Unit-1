@@ -27,7 +27,7 @@ import requests
 #https://pokeapi.co/api/v2/pokemon-habitat/{id or nombre_habitat}/
 
 
-#1- LISTAR POKEMONES POR GENERACION
+#1- LISTAR POKEMONES POR GENERACION //1era Pregunta
 def listar_generaciones_de_pokemon():
     generaciones = ''
     peticion = requests.get('https://pokeapi.co/api/v2/generation/')
@@ -38,34 +38,22 @@ def listar_generaciones_de_pokemon():
         print(generaciones)
         
 def listar_pokemones_por_generacion(generacion):
-    pokemones_por_generacion = ''
-    tipos = ''
     peticion = requests.get(f"https://pokeapi.co/api/v2/generation/{generacion}/")
-    if peticion.status_code == 200:        
+    resultado = ''
+    if peticion.status_code == 200:
+        print(' =================================')
+        print(f"| POKEMONES DE LA GENERACION {generacion}   |")
+        print(' =================================')
         peticion = peticion.json()
-        print(' =================================')
-        print(f"| POKEMONES DE LA {peticion['name'].upper()}   |")
-        print(' =================================')
         for indice, pokemon in enumerate(peticion['pokemon_species'], start=1):
             if indice%7 == 0:
-                pokemones_por_generacion += f"| {pokemon['name']}\t\n"
+                resultado += f"| {pokemon['name']}\t\n"
             else:
-                pokemones_por_generacion += f"| {pokemon['name']}\t"
-        
-        if peticion['types']:            
-            for indice, tipo in enumerate(peticion['types'], start=1):                
-                if indice%5 == 0:
-                    tipos += f"| +{tipo['name']}\t\n"
-                else:
-                    tipos += f"| +{tipo['name']}\t\t"
-
-
-        print(pokemones_por_generacion)
-        print("\n\nTipo de pokemones que aparecen en esta generacion. ")
-        print(tipos)
+                resultado += f"| {pokemon['name']}\t"
+        print(resultado)
         return ""
     else:
-        print('Aun no existe esa generacion y/o algo ha ocurrido en el servidor.')
+        print('Aun no existe esa generacion ')
         return ""
 
 
