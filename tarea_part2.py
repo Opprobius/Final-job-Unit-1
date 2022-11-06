@@ -145,7 +145,24 @@ def obtener_habitat_de_pokemones():
         print(habitat_pokemones)
     else:
         print('Algo ha ocurrido en el servidor')
-
+def obtener_pokemones_por_habitat(habitat):
+    pokemones = ''
+    peticion = requests.get(f"https://pokeapi.co/api/v2/pokemon-habitat/{habitat}")
+    if peticion.status_code == 200:
+        peticion = peticion.json()
+        print(' =================================')
+        print(f"| POKEMONES DE habitat {peticion['name']}   |")
+        print(' =================================')
+        for indice, datos in enumerate(peticion['pokemon_species']):
+            if indice %5==0:
+                pokemones += f"| {datos['name']}\t\n"
+            else:
+                pokemones += f"| {datos['name']}\t"
+        print(pokemones)
+        return pokemones
+    else:
+        print('Algo ha ocurrido en el servidor')
+        return ""
 #FUNCIONES DEL MENU
 menu_opciones = {
         1: 'Listar pokemons por generación',
