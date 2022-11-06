@@ -167,11 +167,12 @@ def ordenar_libros_por_titulo(data:list) -> list:
 
 #7 BUSCAR LIBROS POR AUTOR-EDITORIAL Y/O GENERO
 def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editorial=None, input_genero=None):
-    resultado = data[0]
-
+    print(data[0])
+    resultado = []
     if input_autor != None:
         for indice, item in enumerate(data[1::], start=1):
-            if str(input_autor).strip() in item.get_autores():
+            autores = [autor.lower().strip() for autor in item.get_autores()]                     
+            if str(input_autor).lower().strip() in autores:                    
                 resultado.append(item)
 
     elif input_editorial != None:
@@ -188,7 +189,7 @@ def buscar_libro_por_autor_editorial_genero(data, input_autor=None, input_editor
         listar_libros(resultado)
     else:
         print('No se han encontrado coincidencias.')
-    return data
+    return resultado
 
 #8 BUSCAR LIBROS POR NUMERO DE AUTORES
 
@@ -212,7 +213,7 @@ def buscar_libro_por_numero_autores(data_libros):
 
 
 #9 EDITAR UN LIBRO
- def editar_libro(data, id):
+def editar_libro(data, id):
     for indice, data in enumerate(data):
         if indice != 0:
             if int(data.id) == int(id):
