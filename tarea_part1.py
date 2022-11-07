@@ -83,9 +83,9 @@ def cargar_archivo(nombre_archivo:str):
                 else:
                     data_libros.append(data)            
             print('Datos cargados correctamente!')
-            time.sleep(1)
+            time.sleep(0.7)
     except FileNotFoundError:
-        print("El archivo no existe.")        
+        print("El archivo no existe y/o asegurese que el archivo sea en formato csv.")        
         return nombre_archivo, data_libros
     return nombre_archivo,data_libros
 
@@ -128,7 +128,7 @@ def borrar_libro(data:list, id:int) -> list:
             libro = data.pop(indice)
             print(libro)
             print('El libro ha sido eliminado correctamente!')
-            time.sleep(2)
+            time.sleep(1.5)
     return data
 
 #5 BUSCAR LIBRO POR ISBN O TITULO
@@ -276,7 +276,7 @@ def mostrar_menu(opciones_del_menu):
 def verificar_datos(data):
     if not data:
         print('No tiene datos, cargue o cree un nuevo archivo.')
-        time.sleep(2)
+        time.sleep(1)
         return False
     return True
 

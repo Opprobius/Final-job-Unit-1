@@ -231,7 +231,7 @@ if __name__ == '__main__':
         print(' ======================')
         print('|   MENU PRINCIPAL     |')
         print(' ======================')
-        mostrar_menu(menu_options)
+        mostrar_menu(menu_opciones)
         try:
             opcion = int(input('Que desea hacer?: '))
         except:
